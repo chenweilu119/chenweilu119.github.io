@@ -1,0 +1,838 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="正则表达式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="正则表达式(regular expression)描述了一种字符串匹配的模式，可以用来检查一个串是否含有某种子串、将匹配的子串做替换或者从某个串中取出符合某个条件的子串等。
+
+test：满足匹配的规则/str1/.test(&amp;#39;str2&amp;#39;);  测试str2是否包含有str1，包含返回true，不包含返回false。以检测手机号码为例： 123/18712345678/.test(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://chenweilu119.github.io/2016/06/28/RegExp/index.html">
+<meta property="og:site_name" content="树深时见鹿">
+<meta property="og:description" content="正则表达式(regular expression)描述了一种字符串匹配的模式，可以用来检查一个串是否含有某种子串、将匹配的子串做替换或者从某个串中取出符合某个条件的子串等。
+
+test：满足匹配的规则/str1/.test(&amp;#39;str2&amp;#39;);  测试str2是否包含有str1，包含返回true，不包含返回false。以检测手机号码为例： 123/18712345678/.test(">
+<meta property="og:updated_time" content="2016-10-31T11:37:08.762Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式">
+<meta name="twitter:description" content="正则表达式(regular expression)描述了一种字符串匹配的模式，可以用来检查一个串是否含有某种子串、将匹配的子串做替换或者从某个串中取出符合某个条件的子串等。
+
+test：满足匹配的规则/str1/.test(&amp;#39;str2&amp;#39;);  测试str2是否包含有str1，包含返回true，不包含返回false。以检测手机号码为例： 123/18712345678/.test(">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chenweilu119.github.io/2016/06/28/RegExp/"/>
+
+  <title> 正则表达式 | 树深时见鹿 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8d2e4c484139581885536e93eb5f147";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">树深时见鹿</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"><br/>不乱于心，不困于情 。<br/>不畏将来，不念过往 。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-messages">
+          <a href="/messages" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-commenting"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                正则表达式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-28T19:03:01+08:00" content="2016-06-28">
+              2016-06-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/28/RegExp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/28/RegExp/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/28/RegExp/" class="leancloud_visitors" data-flag-title="正则表达式">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>正则表达式(regular expression)描述了一种字符串匹配的模式，可以用来检查一个串是否含有某种子串、将匹配的子串做替换或者从某个串中取出符合某个条件的子串等。</p>
+</blockquote>
+<h2 id="test：满足匹配的规则"><a href="#test：满足匹配的规则" class="headerlink" title="test：满足匹配的规则"></a>test：满足匹配的规则</h2><p><code>/str1/.test(&#39;str2&#39;);</code>  测试str2是否包含有str1，包含返回true，不包含返回false。<br><strong>以检测手机号码为例： </strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/<span class="number">18712345678</span>/.test(<span class="string">'18712345678'</span>);   <span class="comment">//true  </span></span><br><span class="line">/<span class="number">18712345678</span>/.test(<span class="string">'1871234567'</span>);    <span class="comment">//false       </span></span><br><span class="line">/<span class="number">18712345678</span>/.test(<span class="string">'x18712345678y'</span>);  <span class="comment">//true 包含就返回ture</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="锚点"><a href="#锚点" class="headerlink" title="锚点"></a>锚点</h2><p>匹配一个位置<br>　　1.　　^ ：起始位置<br>　　2.　　$ ：结尾位置<br>　　3.　　\b：单词边界</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/^<span class="number">18712345678</span>/.test(<span class="string">'218712345678'</span>);   <span class="comment">//false  不是以1开始</span></span><br><span class="line">/^<span class="number">18712345678</span>$/.test(<span class="string">'18712345678'</span>);   <span class="comment">//true   以1开始，以8结尾     </span></span><br><span class="line">/\bis\b/.test(<span class="string">'this'</span>);                 <span class="comment">//false </span></span><br><span class="line">/\bis\b/.test(<span class="string">'this is my dog'</span>);       <span class="comment">//true   要有完整的单词完全对应</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="字符类"><a href="#字符类" class="headerlink" title="字符类"></a>字符类</h2><p>匹配一类字符中的一个<br>　　1.　　[abc]：a或者b或者c<br>　　2.　　[0-9]：一个数字<br>　　3.　　[a-z]：一个字母<br>　　4.　　.　　：任一字符（换行除外）<br>　　5.　　[^0-9]：非数字的一个字符，＾表示不包含<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^<span class="number">1</span>[<span class="number">0</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>]$/.test(<span class="string">'18712345678'</span>); <span class="comment">//true 代码a</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><p>具有特殊意义的字符<br>　　1.　　^、$、\b<br>　　2.　　\d：[0-9]<br>　　3.　　\s：空白符<br>　　4.　　\w：[A-Za-z0-9]<br>　　5.　　\D：[^\d]<br>　　6.　　\S：[^\s]<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^<span class="number">1</span>\d\d\d\d\d\d\d\d\d\d$/.test(<span class="string">'18712345678'</span>); <span class="comment">//true 代码b，等价于代码a</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h2><p>出现的次数<br>　　1.　　*：{0,}    　　　　　　 　<br>　　2.　　?：{0,1}<br>　　3.　　+：{1,}<br>　　4.　　{m}：m次<br>　　5.　　{m,n}：m到n次<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/\d*/.test('aaa'); //true 虽然要是有数字，但是因为'*'，数字可以不存在</span><br><span class="line">/^1\d&#123;10&#125;/.test('18712345678'); //true 代码c，等价于代码a和代码b</span><br></pre></td></tr></table></figure></p>
+<h2 id="转义符"><a href="#转义符" class="headerlink" title="转义符"></a>转义符</h2><p>需要匹配的是元字符，在前面加上’\’</p>
+<ul>
+<li><code>/^http：///</code> 中的 <code>/</code> 已经作为正则表达式语法的一部分，应该进行转义 <code>/^http：\/\//</code> </li>
+<li><code>/@163.com$/</code> 中的 <code>.</code> 表示任一字符，应该进行转义 <code>/@163\.com$/</code></li>
+</ul>
+<h2 id="多选分支"><a href="#多选分支" class="headerlink" title="多选分支"></a>多选分支</h2><p>或</p>
+<ul>
+<li><code>/thi(c|n)k/</code> 等价于 <code>/thi[cn]k/</code></li>
+<li>图片格式：<code>/\.(jpg|png|jpeg|gif)$/</code></li>
+<li>网易邮箱：<code>/(.+)@(126|163|188)\.com$/</code></li>
+</ul>
+<h2 id="捕获"><a href="#捕获" class="headerlink" title="捕获"></a>捕获</h2><p>保存匹配到的字符串</p>
+<ul>
+<li>捕获：<code>()</code>。 如 <code>/(.+)@(126|163|188)\.com$/</code>  保存了()里的内容</li>
+<li>不捕获：<code>(?:)</code>。  如 <code>/(.+)@(?:126|163|188)\.com$/</code> 数字部分只做test，不保存</li>
+<li>使用：<code>str.match(regexp)</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">'http://chenweilu119.github.io/alnum?id=1#comment'</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/(^https?:)\/\/([^\/]+)(\/[^\?]*)?(\?[^#]*)?(#.*)?/</span>;</span><br><span class="line"><span class="keyword">var</span> arr = url.match(reg);</span><br><span class="line"><span class="keyword">var</span> protocol = arr[<span class="number">1</span>]; <span class="comment">//协议，第一个捕获的内容</span></span><br><span class="line"><span class="keyword">var</span> host = arr[<span class="number">2</span>]; <span class="comment">//主机</span></span><br><span class="line"><span class="keyword">var</span> pathname = arr[<span class="number">3</span>]; <span class="comment">//路径</span></span><br><span class="line"><span class="keyword">var</span> search = arr[<span class="number">4</span>]; <span class="comment">// 搜索</span></span><br><span class="line"><span class="keyword">var</span> hash = arr[<span class="number">5</span>]; <span class="comment">// 哈希</span></span><br><span class="line"></span><br><span class="line">&gt;<span class="built_in">console</span>.log(arr);</span><br><span class="line">&gt;[<span class="string">"http://chenweilu119.github.io/alnum?id=1#comment"</span>, <span class="string">"http:"</span>, <span class="string">"chenweilu119.github.io"</span>, <span class="string">"/alnum"</span>, <span class="string">"?id=1"</span>, <span class="string">"#comment"</span>, index: <span class="number">0</span>, input: <span class="string">"http://chenweilu119.github.io/alnum?id=1#comment"</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/(^https?:)\/\/([^\/]+)([^\?]*)([^#]*)(.*)/</span>; <span class="comment">//等价于上一个表达式，输出结果一样，正则表达式表示方法不唯一</span></span><br></pre></td></tr></table></figure>
+<h2 id="replace：替换一个子串"><a href="#replace：替换一个子串" class="headerlink" title="replace：替换一个子串"></a>replace：替换一个子串</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.replace(replace/substr,replacement)</span><br></pre></td></tr></table></figure>
+<p>　　replacement 可以是字符串，也可以是函数。如果它是字符串，那么每个匹配都将由字符串替换。但是 replacement 中的 $ 字符具有特定的含义。如下所示，它说明从模式匹配得到的字符串将用于替换。</p>
+<ul>
+<li>$1、$2、…、$99：与 regexp 中的第 1 到第 99 个子表达式相匹配的文本。</li>
+<li>$&amp;：与 regexp 相匹配的子串。</li>
+<li>$`：位于匹配子串左侧的文本。</li>
+<li>$’：位于匹配子串右侧的文本。</li>
+<li>$$：直接量符号。</li>
+</ul>
+<p>把 “tomato is 5” 转换为 “tomato is 5.00” 的形式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'The Price of tomato is 5.'</span></span><br><span class="line">str.replace(<span class="regexp">/(\d+)/</span>,<span class="string">'$1.00'</span>);</span><br><span class="line">&gt;The Price <span class="keyword">of</span> tomato is <span class="number">5.00</span>.</span><br><span class="line">var str1 = <span class="string">'The Price of tomato is 5. The price of apple is 10.'</span></span><br><span class="line">str1.replace(<span class="regexp">/(\d)+/</span>,<span class="string">'$1.00'</span>);</span><br><span class="line">&gt;The Price <span class="keyword">of</span> tomato is <span class="number">5.00</span>. The price <span class="keyword">of</span> apple is <span class="number">10.</span> <span class="comment">//只变了一个</span></span><br><span class="line">str1.replace(<span class="regexp">/(\d+)/g</span>,<span class="string">'$1.00'</span>); <span class="comment">//增加全局模式 'g'</span></span><br><span class="line">&gt;The Price <span class="keyword">of</span> tomato is <span class="number">5.00</span>. The price <span class="keyword">of</span> apple is <span class="number">10.00</span>.</span><br></pre></td></tr></table></figure></p>
+<p>把 “Doe, John” 转换为 “John Doe” 的形式：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">"Doe, John"</span>;</span><br><span class="line">name.replace(<span class="regexp">/(\w+)\s*, \s*(\w+)/</span>, <span class="string">"$2 $1"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>把所有的花引号替换为直引号：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'"a", "b"'</span>;</span><br><span class="line">name.replace(<span class="regexp">/"([^"]*)"/g</span>, <span class="string">"'$1'"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>把字符串中所有单词的首字母都转换为大写<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'aaa bbb ccc'</span>;</span><br><span class="line">uw=name.replace(<span class="regexp">/\b\w+\b/g</span>, <span class="function"><span class="keyword">function</span>(<span class="params">word</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> word.substring(<span class="number">0</span>,<span class="number">1</span>).toUpperCase()+word.substring(<span class="number">1</span>);&#125;</span><br><span class="line">  );</span><br></pre></td></tr></table></figure></p>
+<h2 id="exec：执行"><a href="#exec：执行" class="headerlink" title="exec：执行"></a>exec：执行</h2><p><code>regexpObj.exec(str)</code>，具有更强大的检索能力，能得到</p>
+<ul>
+<li>更详尽的结果：index</li>
+<li>过程的状态：lastIndex</li>
+</ul>
+<p>　　因为不常用，所有这里就不进行介绍了，具体介绍可以参见：<br> <a href="http://www.w3school.com.cn/jsref/jsref_exec_regexp.asp" title="正则表达式 exec" target="_blank" rel="external">http://www.w3school.com.cn/jsref/jsref_exec_regexp.asp</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>　　在正则表达式中，利用()进行分组，使用斜杠加数字表示引用，\1就是引用第一个分组，\2就是引用第二个分组。将[a-zA-Z]做为一个分组，然后引用，就可以判断是否有连续重复的字母。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">containsRepeatingLetter</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="regexp">/([a-zA-Z])\1/</span>.test(str);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/正则表达式/" rel="tag">#正则表达式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/26/BeginAgain/" rel="next" title="Begin Again">
+                <i class="fa fa-chevron-left"></i> Begin Again
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/01/interview/" rel="prev" title="《剑指offer》常见面试题">
+                《剑指offer》常见面试题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/28/RegExp/"
+           data-title="正则表达式" data-url="http://chenweilu119.github.io/2016/06/28/RegExp/">
+      </div>
+    
+  </div>
+ 
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar2.png"
+               alt="Chen Weilu" />
+          <p class="site-author-name" itemprop="name">Chen Weilu</p>
+          <p class="site-description motion-element" itemprop="description">前端 | 杭州</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenweilu119" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chenweilu" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#test：满足匹配的规则"><span class="nav-number">1.</span> <span class="nav-text">test：满足匹配的规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锚点"><span class="nav-number">2.</span> <span class="nav-text">锚点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符类"><span class="nav-number">3.</span> <span class="nav-text">字符类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元字符"><span class="nav-number">4.</span> <span class="nav-text">元字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#量词"><span class="nav-number">5.</span> <span class="nav-text">量词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转义符"><span class="nav-number">6.</span> <span class="nav-text">转义符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多选分支"><span class="nav-number">7.</span> <span class="nav-text">多选分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获"><span class="nav-number">8.</span> <span class="nav-text">捕获</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#replace：替换一个子串"><span class="nav-number">9.</span> <span class="nav-text">replace：替换一个子串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exec：执行"><span class="nav-number">10.</span> <span class="nav-text">exec：执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">11.</span> <span class="nav-text">其他</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Weilu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenweilu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("MqAEbrEtV1iFTS1zb8oDfgXJ-gzGzoHsz", "VOuMQfVlzGBj4RTEzdq2KARy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
