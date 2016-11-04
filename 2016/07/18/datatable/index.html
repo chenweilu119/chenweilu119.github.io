@@ -1,277 +1,794 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
-    
 
-    <title>
-      jQuery Datatable 多条件筛选的实现 | 树深时见鹿 
-    </title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    
-      <meta name="author" content="Chen Weilu">
-    
-    
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <meta name="description" content="demo： https://chenweilu119.github.io/datatable/代码：https://github.com/chenweilu119/datatable">
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JQuery,datatable," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="demo： https://chenweilu119.github.io/datatable/代码：https://github.com/chenweilu119/datatable">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jQuery Datatable 多条件筛选的实现 | 树深时见鹿">
+<meta property="og:title" content="jQuery Datatable 多条件筛选的实现">
 <meta property="og:url" content="http://chenweilu119.github.io/2016/07/18/datatable/index.html">
 <meta property="og:site_name" content="树深时见鹿">
 <meta property="og:description" content="demo： https://chenweilu119.github.io/datatable/代码：https://github.com/chenweilu119/datatable">
 <meta property="og:image" content="https://i.imgur.com/ACrOUvZ.png">
 <meta property="og:updated_time" content="2016-11-03T09:36:55.794Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jQuery Datatable 多条件筛选的实现 | 树深时见鹿">
+<meta name="twitter:title" content="jQuery Datatable 多条件筛选的实现">
 <meta name="twitter:description" content="demo： https://chenweilu119.github.io/datatable/代码：https://github.com/chenweilu119/datatable">
 <meta name="twitter:image" content="https://i.imgur.com/ACrOUvZ.png">
-    
-    
-    
-      <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    
-    <link rel="stylesheet" href="/css/uno.css">
-    <link rel="stylesheet" href="/css/highlight.css">
-    <link rel="stylesheet" href="/css/archive.css">
-    <link rel="stylesheet" href="/css/china-social-icon.css">
 
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://chenweilu119.github.io/2016/07/18/datatable/"/>
+
+  <title> jQuery Datatable 多条件筛选的实现 | 树深时见鹿 </title>
 </head>
-<body>
 
-    <span class="mobile btn-mobile-menu">
-        <i class="icon icon-list btn-mobile-menu__icon"></i>
-        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
-    </span>
-
-    
-
-<header class="panel-cover panel-cover--collapsed">
-
-
-  <div class="panel-main">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
-    <div class="panel-main__inner panel-inverted">
-    <div class="panel-main__content">
-
-        
-
-        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">树深时见鹿</a></h1>
-        <hr class="panel-cover__divider" />
-
-        
-        <p class="panel-cover__description">
-          &lt;br/&gt;不乱于心，不困于情 。&lt;br/&gt;不畏将来，不念过往 。
-        </p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary" />
-        
-
-        <div class="navigation-wrapper">
-
-          <nav class="cover-navigation cover-navigation--primary">
-            <ul class="navigation">
-
-              
-                
-                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客</a></li>
-              
-                
-                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
-              
-                
-                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
-              
-
-            </ul>
-          </nav>
-
-          <!-- ----------------------------
-To add a new social icon simply duplicate one of the list items from below
-and change the class in the <i> tag to match the desired social network
-and then add your link to the <a>. Here is a full list of social network
-classes that you can use:
-
-    icon-social-500px
-    icon-social-behance
-    icon-social-delicious
-    icon-social-designer-news
-    icon-social-deviant-art
-    icon-social-digg
-    icon-social-dribbble
-    icon-social-facebook
-    icon-social-flickr
-    icon-social-forrst
-    icon-social-foursquare
-    icon-social-github
-    icon-social-google-plus
-    icon-social-hi5
-    icon-social-instagram
-    icon-social-lastfm
-    icon-social-linkedin
-    icon-social-medium
-    icon-social-myspace
-    icon-social-path
-    icon-social-pinterest
-    icon-social-rdio
-    icon-social-reddit
-    icon-social-skype
-    icon-social-spotify
-    icon-social-stack-overflow
-    icon-social-steam
-    icon-social-stumbleupon
-    icon-social-treehouse
-    icon-social-tumblr
-    icon-social-twitter
-    icon-social-vimeo
-    icon-social-xbox
-    icon-social-yelp
-    icon-social-youtube
-    icon-social-zerply
-    icon-mail
-
--------------------------------->
-
-<!-- add social info here -->
 
 
 
-        </div>
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b8d2e4c484139581885536e93eb5f147";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
-      </div>
 
-    </div>
 
-    <div class="panel-cover--overlay"></div>
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">树深时见鹿</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
   </div>
-</header>
+  <p class="site-subtitle"><br/>不乱于心，不困于情 。<br/>不畏将来，不念过往 。</p>
+</div>
 
-    <div class="content-wrapper">
-        <div class="content-wrapper__inner entry">
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-messages">
+          <a href="/messages" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-commenting"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
             
 
-<article class="post-container post-container--single">
-
-  <header class="post-header">
-    
-    <h1 class="post-title">jQuery Datatable 多条件筛选的实现</h1>
-
+  <div id="posts" class="posts-expand">
     
 
-    <div class="post-meta">
-      <time datetime="2016-07-18" class="post-meta__date date">2016-07-18</time> 
+  
+  
 
-      <span class="post-meta__tags tags">
+  
+  
+  
 
-          
-            <font class="categories">
-            &#8226; 分类:
-            <a class="categories-link" href="/categories/前端/">前端</a>
-            </font>
-          
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
-          
-             &#8226; 标签:
-            <font class="tags">
-              <a class="tags-link" href="/tags/JQuery/">JQuery</a>, <a class="tags-link" href="/tags/datatable/">datatable</a>
-            </font>
-          
-
-      </span>
-    </div>
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery Datatable 多条件筛选的实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-18T17:52:39+08:00" content="2016-07-18">
+              2016-07-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/18/datatable/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/18/datatable/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/18/datatable/" class="leancloud_visitors" data-flag-title="jQuery Datatable 多条件筛选的实现">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
     
 
-  </header>
 
-  <section id="post-content" class="article-content post">
-    <p><img src="https://i.imgur.com/ACrOUvZ.png" alt="datatable"><br><strong>demo：</strong><br> <a href="https://chenweilu119.github.io/datatable/" title="datatable">https://chenweilu119.github.io/datatable/</a><br><strong>代码：</strong><br><a href="https://github.com/chenweilu119/datatable" title="datatable-code" target="_blank" rel="external">https://github.com/chenweilu119/datatable</a><br><a id="more"></a><br>　　DataTables 提供了一个API：用户的自定义筛选功能<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.fn.dataTable.ext.search</span><br></pre></td></tr></table></figure></p>
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://i.imgur.com/ACrOUvZ.png" alt="datatable"><br><strong>demo：</strong><br> <a href="https://chenweilu119.github.io/datatable/" title="datatable">https://chenweilu119.github.io/datatable/</a><br><strong>代码：</strong><br><a href="https://github.com/chenweilu119/datatable" title="datatable-code" target="_blank" rel="external">https://github.com/chenweilu119/datatable</a><br><a id="more"></a><br>　　DataTables 提供了一个API：用户的自定义筛选功能<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.fn.dataTable.ext.search</span><br></pre></td></tr></table></figure></p>
 <p>　　这是一个数组，把满足条件的行push到数组中，具体的例子如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$.fn.dataTable.ext.search.push(</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params"> settings, data, dataIndex </span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> start1 = <span class="keyword">new</span> <span class="built_in">Date</span>($(<span class="string">".start1"</span>).val().replace(<span class="regexp">/-/g</span>,<span class="string">"-"</span>)); <span class="comment">//第一个申请时间</span></span><br><span class="line">    	<span class="keyword">var</span> start2 = <span class="keyword">new</span> <span class="built_in">Date</span>($(<span class="string">".start2"</span>).val().replace(<span class="regexp">/-/g</span>,<span class="string">"-"</span>)); <span class="comment">//第二个申请时间</span></span><br><span class="line">	<span class="keyword">var</span> end1 = <span class="keyword">new</span> <span class="built_in">Date</span>($(<span class="string">".end1"</span>).val().replace(<span class="regexp">/-/g</span>,<span class="string">"-"</span>)); <span class="comment">//第一个结题时间</span></span><br><span class="line">	<span class="keyword">var</span> end2 = <span class="keyword">new</span> <span class="built_in">Date</span>($(<span class="string">".end2"</span>).val().replace(<span class="regexp">/-/g</span>,<span class="string">"-"</span>)); <span class="comment">//第二个结题时间</span></span><br><span class="line">        <span class="keyword">var</span> start = <span class="keyword">new</span> <span class="built_in">Date</span>(data[<span class="number">6</span>].substring(<span class="number">0</span>,data[<span class="number">6</span>].indexOf(<span class="string">"至"</span>)).replace(<span class="regexp">/-/g</span>,<span class="string">"-"</span>));<span class="comment">//表格中的申请时间</span></span><br><span class="line">        <span class="keyword">var</span> end = <span class="keyword">new</span> <span class="built_in">Date</span>(data[<span class="number">6</span>].substring(data[<span class="number">6</span>].indexOf(<span class="string">"至"</span>)+<span class="number">1</span>,data[<span class="number">6</span>].length).replace(<span class="regexp">/-/g</span>,<span class="string">"-"</span>));<span class="comment">//表格中的结题时间</span></span><br><span class="line">        <span class="keyword">var</span> projectionType = data[<span class="number">5</span>];<span class="comment">//表格中的课题类型</span></span><br><span class="line">        <span class="keyword">var</span> pt = <span class="keyword">new</span> <span class="built_in">Array</span>();<span class="comment">//存储选中的课题类型</span></span><br><span class="line">	<span class="keyword">var</span> type = <span class="keyword">new</span> <span class="built_in">Array</span>();<span class="comment">//存储选中的学科分类</span></span><br><span class="line">    	$(<span class="string">".projectionType:checked"</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        　　pt.push($(<span class="keyword">this</span>).val());</span><br><span class="line">  　　　&#125;)</span><br><span class="line">  　　　$(<span class="string">".type:checked"</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      　　　type.push($(<span class="keyword">this</span>).val());</span><br><span class="line">  　　　&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//判断表格中的每一条数据，是否在筛选范围内</span></span><br><span class="line">	<span class="keyword">if</span> (((<span class="built_in">isNaN</span>(start1) &amp;&amp; <span class="built_in">isNaN</span>(start2))||(<span class="built_in">isNaN</span>(start1) &amp;&amp; start &lt;= start2 )||</span><br><span class="line">	　 (start1 &lt;= start &amp;&amp; <span class="built_in">isNaN</span>(start2))||(start1 &lt;= start &amp;&amp; start &lt;= start2))&amp;&amp;</span><br><span class="line">	　　((<span class="built_in">isNaN</span>(end1) &amp;&amp; <span class="built_in">isNaN</span>(end2))||(<span class="built_in">isNaN</span>(end1) &amp;&amp; end &lt;= end2)||(end1 &lt;= end </span><br><span class="line">	 　 &amp;&amp;<span class="built_in">isNaN</span>(end2))||(end1 &lt;= end &amp;&amp; end &lt;= end2))&amp;&amp;((pt.length==<span class="number">0</span>)||($.inArray</span><br><span class="line">	　　(projectionType,pt)&gt;=<span class="number">0</span>))&amp;&amp;((type.length==<span class="number">0</span>)||($.inArray(data[<span class="number">3</span>],type)&gt;=<span class="number">0</span>)))</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>　　可以对表格中的参数进行设置，如<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> t = $(<span class="string">'.datatable'</span>).DataTable(&#123;</span><br><span class="line">    <span class="string">"iDisplayLength"</span>:<span class="number">5</span>, <span class="comment">//一页显示几行</span></span><br><span class="line">    <span class="string">"bLengthChange"</span>:<span class="literal">false</span>,<span class="comment">//开关，是否显示一个每页长度的选择条（需要分页器支持）</span></span><br><span class="line">    <span class="string">"columnDefs"</span>: [&#123; <span class="comment">//这个字段可以对列进行很多操作,</span></span><br><span class="line">    <span class="string">"searchable"</span>: <span class="literal">false</span>, <span class="comment">//不在搜索范围内</span></span><br><span class="line">    <span class="string">"orderable"</span>: <span class="literal">false</span>, <span class="comment">//不排序</span></span><br><span class="line">    <span class="string">"targets"</span>: <span class="number">0</span>,    <span class="comment">//第1列</span></span><br><span class="line">    &#125;],</span><br><span class="line">    <span class="string">"order"</span>: [[<span class="number">1</span>, <span class="string">'asc'</span>]], <span class="comment">//按第二列升序，降序是desc</span></span><br><span class="line">    <span class="comment">//对应的中文显示</span></span><br><span class="line">    <span class="string">"oLanguage"</span>: &#123;   </span><br><span class="line">        <span class="string">"sProcessing"</span>:   <span class="string">"处理中..."</span>,</span><br><span class="line">	    <span class="string">"sLengthMenu"</span>:   <span class="string">"_MENU_ 记录/页"</span>,</span><br><span class="line">	    <span class="string">"sZeroRecords"</span>:  <span class="string">"没有匹配的记录"</span>,</span><br><span class="line">	    <span class="string">"sInfo"</span>:         <span class="string">"显示第 _START_ 至 _END_ 项记录，共 _TOTAL_ 项"</span>,</span><br><span class="line">	    <span class="string">"sInfoEmpty"</span>:    <span class="string">"显示第 0 至 0 项记录，共 0 项"</span>,</span><br><span class="line">	    <span class="string">"sInfoFiltered"</span>: <span class="string">"(由 _MAX_ 项记录过滤)"</span>,</span><br><span class="line">	    <span class="string">"sInfoPostFix"</span>:  <span class="string">""</span>,</span><br><span class="line">	    <span class="string">"sSearch"</span>:       <span class="string">"模糊搜索:"</span>,</span><br><span class="line">	    <span class="string">"sUrl"</span>:          <span class="string">""</span>,</span><br><span class="line">	    <span class="string">"oPaginate"</span>: &#123;</span><br><span class="line">	     <span class="string">"sFirst"</span>:    <span class="string">"首页"</span>,</span><br><span class="line">	     <span class="string">"sPrevious"</span>: <span class="string">"上页"</span>,</span><br><span class="line">	     <span class="string">"sNext"</span>:     <span class="string">"下页"</span>,</span><br><span class="line">	     <span class="string">"sLast"</span>:     <span class="string">"末页"</span></span><br><span class="line">	    &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <p>　　经过筛选以后序号需要重新设定<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//给第一列加上序号</span></span><br><span class="line">t.on(<span class="string">'order.dt search.dt'</span>,</span><br><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    t.column(<span class="number">0</span>, &#123;</span><br><span class="line">        search: <span class="string">'applied'</span>,</span><br><span class="line">        order: <span class="string">'applied'</span></span><br><span class="line">    &#125;).nodes().each(<span class="function"><span class="keyword">function</span>(<span class="params">cell, i</span>) </span>&#123;</span><br><span class="line">        cell.innerHTML = i + <span class="number">1</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;).draw();</span><br></pre></td></tr></table></figure></p>
 <p>　　按搜索按钮进行自定义筛选<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'.filter'</span>).click( <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    t.draw(); </span><br><span class="line">&#125; );</span><br></pre></td></tr></table></figure></p>
 
-  </section>
+      
+    </div>
 
-  <!-- -->
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JQuery/" rel="tag">#JQuery</a>
+          
+            <a href="/tags/datatable/" rel="tag">#datatable</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/17/git-to-github/" rel="next" title="用Git把本地代码传到Github上">
+                <i class="fa fa-chevron-left"></i> 用Git把本地代码传到Github上
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/11/unique/" rel="prev" title="JavaScript数组去重的多种方法实现">
+                JavaScript数组去重的多种方法实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
 
 
-<!--
 
-<section class="post-comments">
-  <div id="disqus_thread"></div>
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/18/datatable/"
+           data-title="jQuery Datatable 多条件筛选的实现" data-url="http://chenweilu119.github.io/2016/07/18/datatable/">
+      </div>
+    
+  </div>
+ 
+
+        </div>
+        
+          
   
-  <div class="ds-thread" data-thread-key="6271105948241102000"   
-           data-title="我的第一篇博客" data-url="https://chenweilu119.github.io/2016/06/23/hello-world/myFirstBlog"></div> 
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar2.png"
+               alt="Chen Weilu" />
+          <p class="site-author-name" itemprop="name">Chen Weilu</p>
+          <p class="site-description motion-element" itemprop="description">前端 | 杭州</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chenweilu119" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chenweilu" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Weilu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
 
 <script type="text/javascript">
-var duoshuoQuery = {short_name:"chenweilu"};itmyhome1900  头像会晃
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenweilu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("MqAEbrEtV1iFTS1zb8oDfgXJ-gzGzoHsz", "VOuMQfVlzGBj4RTEzdq2KARy");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
   </script>
 
 
-</section>
 
- -->
   
-</article>
-
-
-            <footer class="footer">
-
-    <span class="footer__copyright">&copy; 2014-2016.  |  由<a href="https://hexo.io/"> Hexo </a>强力驱动  |  主题<a href="https://github.com/someus/huno"> Huno </a></span>
-    
-</footer>
-        </div>
-    </div>
-
-    <!-- js files -->
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/scale.fix.js"></script>
-    
-
-    
-
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript"> 
-        $(document).ready(function(){
-            MathJax.Hub.Config({ 
-                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
-            });
-        });
-    </script>
-
-
-    
-
-    <script src="/js/awesome-toc.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $.awesome_toc({
-                overlay: true,
-                contentId: "post-content",
-            });
-        });
-    </script>
-
-
-    
-    
-    <!--kill ie6 -->
-<!--[if IE 6]>
-  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
-<![endif]-->
 
 </body>
 </html>
